@@ -13,6 +13,7 @@ Model name is converted to lowercase for the collection name:
 
 from pydantic import BaseModel, Field
 from typing import Optional
+from datetime import datetime
 
 # Example schemas (replace with your own):
 
@@ -37,6 +38,19 @@ class Product(BaseModel):
     price: float = Field(..., ge=0, description="Price in dollars")
     category: str = Field(..., description="Product category")
     in_stock: bool = Field(True, description="Whether product is in stock")
+
+# Todo app schema
+class Task(BaseModel):
+    """
+    Tasks collection schema
+    Collection name: "task"
+    """
+    title: str = Field(..., min_length=1, max_length=200, description="Short title for the task")
+    description: Optional[str] = Field(None, max_length=1000, description="Optional details")
+    category: Optional[str] = Field(None, description="Category or list name, e.g., Work, Personal")
+    due_date: Optional[datetime] = Field(None, description="Due date in ISO format")
+    priority: Optional[str] = Field(None, description="low | medium | high")
+    completed: bool = Field(False, description="Completion status")
 
 # Add your own schemas here:
 # --------------------------------------------------
